@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Welcome FoodBank</title>
+		<meta charset="utf-8">
+		<meta name="discription" content="Book Reviews Demo Webpage for Practice.">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="/static/css/books/index.css">
+		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+		<script type="text/javascript">
+		tday=new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
+		tmonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+
+		function GetClock(){
+		var d=new Date();
+		var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate(),nyear=d.getYear();
+		if(nyear<1000) nyear+=1900;
+		var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds(),ap;
+
+			if(nhour==0){ap=" AM";nhour=12;}
+		else if(nhour<12){ap=" AM";}
+		else if(nhour==12){ap=" PM";}
+		else if(nhour>12){ap=" PM";nhour-=12;}
+
+		if(nmin<=9) nmin="0"+nmin;
+		if(nsec<=9) nsec="0"+nsec;
+
+		document.getElementById('clockbox').innerHTML=""+tday[nday]+", "+tmonth[nmonth]+" "+ndate+", "+nyear+" "+nhour+":"+nmin+":"+nsec+ap+"";
+		}
+
+		window.onload=function(){
+		GetClock();
+		setInterval(GetClock,1000);
+		}
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+
+			<nav class="navbar navbar-inverse" style="height:75px;">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand">Welcome,dd {{session['name']}}<div id="clockbox"></div></a>
+					</div>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/books/add">Request Food</a></li>
+						<li><a href="/logout/">Logout</a></li>
+					</ul>
+				</div>
+			</nav>
+			<div id="map" style="width:80%;margin:30px auto; height:250px"></div>
+
+			<div class="well col-sm-7">
+				<h2>Available Food</h2>
+				<div id="table">
+					<table class="table">
+			<thead>
+				<tr>
+					<th> Business Name</th>
+					<th>Food Type</th>
+					<th>Comment</th>
+					<th>Claim food</th>
+				</tr>
+			</thead>
+				{% for offer in offers %}
+				<form action="/claim/{{offer['id']}}" method="get">
+			<tbody>
+				<tr>
+					<td>{{offer['name']}}</td>
+					<td>{{offer['type']}}</td>
+					<td>{{offer['comment']}}</td>
+					<td><input type="submit" class="btn btn-success"  value="Claim"></td>
+				</tr>
+			</tbody>
+				{% endfor %}
+			</form>
+		</table>
+				</div>
+			</div>
+		</div>
+		<div class="well col-sm-5">
+				<h2>Accepted requests</h2>
+				<div id="table">
+					<table class="table">
+			<thead>
+				<tr>
+					<th>Food Type</th>
+					<th>Provider</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+
+				{% for accept in accepted_requests %}
+				<form action="claim/{{accept['id']}}" method="get">
+			<tbody>
+				<tr>
+					<td>{{accept['type']}}</td>
+					<td>{{accept['name']}}</td>
+					<td>{{accept['comment']}}</td>
+				</tr>
+			</tbody>
+			{% endfor %}
+			</form>
+		</table>
+
+				</div>
+
+		</div>
+<center>
+	<form action="/request" method="get">
+		<input type="submit" class="btn btn-success" value="Request Food"style="width: 250px; height: 50px;"></input>
+	</form>
+</center>
+</div>
+
+		</div>
+		<script>
+
+			var locations = [
+		      ["Original Joes", 37.331251, -121.887236],
+		      ["Henry's Hi-Life", 37.335440, -121.898148],
+		      ["Linda's Bakery", 37.344319, -121.872944],
+		      ["Philz Coffee", 37.333646, -121.884853],
+		      ["The Old Spaghetti Factory", 37.335934, -121.893975],
+		      ["Smoke Eaters", 37.345138, -121.935970],
+		      ["Bill's Cafe", 37.328363, -121.931830]
+		    ];
+		    var map = new google.maps.Map(document.getElementById('map'), {
+		      zoom: 13,
+		      maxZoom: 17,
+		      minZoom: 11,
+		      center: new google.maps.LatLng(37.336107, -121.890607),
+		      mapTypeId: google.maps.MapTypeId.ROADMAP
+		    });
+
+		    var infowindow = new google.maps.InfoWindow();
+
+		    var marker, i;
+
+		    for (i = 0; i < locations.length; i++) {
+		      marker = new google.maps.Marker({
+		        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+		        map: map
+		      });
+
+		      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+		        return function() {
+		          infowindow.setContent(locations[i][0]);
+		          infowindow.open(map, marker);
+		        }
+		      })(marker, i));
+		    }
+		</script>
+	</body>
+</html>

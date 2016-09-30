@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Request Food</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="/static/css/books/add.css">
+	</head>
+	<body>
+		<div id="wrapper">
+			<nav class="navbar navbar-inverse">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand">Welcome Bank Name</a>
+					</div>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/books">Home</a></li>
+						<li><a href="/users/logout">Logout</a></li>
+					</ul>
+				</div>
+			</nav>
+			<div class="well">
+				<h1>Request food form:</h1>
+				<form class="form-horizontal" action="/request/food" method="post">
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="author">Food Type:</label>
+						<div class="col-sm-4">
+							<div class="col-sm-8">
+								<select class="form-control" name="type" style=="width: 250px; height: 50px;">
+					        <option>Meat</option>
+					        <option>Dairy</option>
+					        <option>Pastry</option>
+					        <option>Drinks</option>
+								</select>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="review">Comment:</label>
+						<div class="col-sm-4">
+							<textarea class="form-control" rows="5" name="comment" placeholder="Enter Comment here"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="rating">Date desired:</label>
+						<div class="col-sm-4">
+							<input name="date" type="date">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<input type="submit" class="btn btn-default" value="Request"></input>
+						</div>
+
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

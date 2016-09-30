@@ -1,0 +1,182 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
+    </head>
+
+    <style media="screen">
+        .error{
+            font-weight: lighter;
+            font-size: 11px;
+            color: red;
+        }
+
+    </style>
+
+    <body background ='/static/css/login-background.jpg'>
+        <div class="container">
+
+            <div class="page-header">
+                <h1 class="text-center"><font color ='white'>Foodnation</font></h1>
+                <br>
+            </div><!-- End of page-header -->
+            <br>
+            <div class="col-xs-4 col-xs-offset-1 well">
+                <h3>Register</h3>
+                <br>
+
+                <!-- Registration Form   -->
+                <form action='users/create' method='POST'>
+
+                    <!-- Firstname -->
+                    <div class="form-group">
+                        <label for="email">Name *
+                            {% with errors =
+                            get_flashed_messages(category_filter=['name']) %}
+                                {% if errors %}
+                                    <span class="error"> {{ errors[0] }} </span>
+                                {% endif %}
+                            {% endwith %}
+                        </label>
+                            <input class="form-control" type="text" name="name" id="name" placeholder="Company name" />
+                    </div><!-- End of "form-group"! -->
+
+                    <!-- Company/Agency -->
+
+
+                    <!--Drop Down Menu Giver/Recipient-->
+                    <div class="form-group">
+                        <label for="name">Donar/Recipient *
+                            {% with errors =
+                            get_flashed_messages(category_filter=['Comany/Agency']) %}
+                                {% if errors %}
+                                    <span class="error"> {{ errors[0] }} </span>
+                                {% endif %}
+                            {% endwith %}
+                        </label>
+                        <select name="type" class="form-control" id="sel1">
+                            <option value="Select">Select</option>
+                            <option value="Donar">Donor</option>
+                            <option value="Recipient">Recipient</option>
+                        </select>
+                    </div>
+
+                    <!-- Address Address line1, 2, city, zip state-->
+                    <div class="form-group">
+                        <label for="email">Address *
+                            {% with errors = get_flashed_messages(category_filter=["email"]) %}
+                                {% if errors %}
+                                    <span class="error">  {{ errors[0] }}</span>
+                                {% endif %}
+                            {% endwith %}
+                        </label>
+                        <input class="form-control" type="Address" name="address1" id="Street" placeholder="Street"/>
+                        <input class="form-control" type="Address" name="address2" id="Suite" placeholder="Suite"/>
+                        <input class="form-control" type="Address" name="city" id="City" placeholder="City"/>
+                        <input class="form-control" type="Address" name="state" id="State" placeholder="State"/>
+                        <input class="form-control" type="Address" name="zip" id="Postal_code" placeholder="Postal Code"/>
+                    </div><!-- End of "form-group"! -->
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">Email *
+                            {% with errors = get_flashed_messages(category_filter=["email"]) %}
+                                {% if errors %}
+                                    <span class="error">  {{ errors[0] }}</span>
+                                {% endif %}
+                            {% endwith %}
+                        </label>
+                        <input class="form-control" type="email" name="email" id="email" placeholder="Email"/>
+                    </div><!-- End of "form-group"! -->
+
+                    <!-- Password -->
+                    <div  class="form-group">
+                        <label for="password">Password *
+                            {% with errors = get_flashed_messages(category_filter=["password"]) %}
+                                {% if errors %}
+                                    <span class="error">  {{ errors[0] }}</span>
+                                {% endif %}
+                            {% endwith %}
+                        </label>
+                        <input class="form-control" type="password" name="password" id="password" placeholder="Password"/>
+                    </div><!-- End of "form-group"! -->
+
+                    <!-- Confirm password -->
+                    <div class="form-group">
+                        <label for="passwordConfirm">Confirm Password *
+                            {% with errors = get_flashed_messages(category_filter=["pw_confirmation"]) %}
+                                {% if errors %}
+                                    <span class="error">  {{ errors[0] }}</span>
+                                {% endif %}
+                            {% endwith %}
+                        </label>
+                        <input class="form-control" type="password" name="pw_confirmation" id="passwordConfirm" placeholder="Confirm Password"/>
+                    </div><!-- End of "form-group"! -->
+
+                    <!-- Registration submit button -->
+                    <div class="form-group">
+                        <input class="btn btn-success pull-right" type="submit" value="Register" role="button" />
+                    </div>
+
+                    <!-- "These fields are required." text -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="text-muted"><strong>*</strong> These fields are required.</p>
+                        </div>
+                    </div>
+                </form>
+            </div><!-- End of 'col-xs-4 col-xs-offset-1 well'! -->
+
+            <div class='col-xs-4 col-xs-offset-2 well'>
+                <h3>Login</h3>
+                <br>
+
+                <!-- Login form -->
+                <form action='/users/login' method='POST'>
+                    <div class="form-group">
+
+                        <!-- Email -->
+                        <label>Email *
+                            {% with errors = get_flashed_messages(category_filter=["lg_email"]) %}
+                                {% if errors %}
+                                    <span class="error">  {{ errors[0] }}</span>
+                                {% endif %}
+                            {% endwith %}
+                        </label>
+                        <input class="form-control" type="email" name="email" placeholder="Email"/>
+                    </div><!-- End of "form-group"! -->
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label>Password *
+                            {% with errors = get_flashed_messages(category_filter=["lg_password"]) %}
+                                {% if errors %}
+                                    <span class="error">  {{ errors[0] }}</span>
+                                {% endif %}
+                            {% endwith %}
+                        </label>
+                        <input class="form-control" type="password" name="password" placeholder="Password">
+                    </div><!-- End of "form-group"! -->
+
+                    <!-- Login submit button -->
+                    <div class="form-group">
+                        <input class="btn btn-success pull-right" type="submit" value="Login" role="button" />
+                    </div><!-- End of "form-group"! -->
+
+                    <!-- "These fields are required." text -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="text-muted"><strong>*</strong> These fields are required.</p>
+                        </div>
+                    </div>
+                </form><!-- End of Login form -->
+            </div><!-- End of 'col-xs-4 col-xs-offset-2 well'! -->
+        </div><!-- End of container -->
+    </body>
+</html>

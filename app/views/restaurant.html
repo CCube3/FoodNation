@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Request Food</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="/static/css/books/add.css">
+	</head>
+	<body>
+		<div id="wrapper">
+			<nav class="navbar navbar-inverse" style="height:75px;>
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand">Welcome <div id="clockbox"></div></a>
+						<script type="text/javascript">
+						tday=new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
+						tmonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+
+						function GetClock(){
+						var d=new Date();
+						var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate(),nyear=d.getYear();
+						if(nyear<1000) nyear+=1900;
+						var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds(),ap;
+
+							if(nhour==0){ap=" AM";nhour=12;}
+						else if(nhour<12){ap=" AM";}
+						else if(nhour==12){ap=" PM";}
+						else if(nhour>12){ap=" PM";nhour-=12;}
+
+						if(nmin<=9) nmin="0"+nmin;
+						if(nsec<=9) nsec="0"+nsec;
+
+						document.getElementById('clockbox').innerHTML=""+tday[nday]+", "+tmonth[nmonth]+" "+ndate+", "+nyear+" "+nhour+":"+nmin+":"+nsec+ap+"";
+						}
+
+						window.onload=function(){
+						GetClock();
+						setInterval(GetClock,1000);
+						}
+						</script>
+					</div>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/">Home</a></li>
+						<li><a href="/users/logout">Logout</a></li>
+					</ul>
+				</div>
+			</nav>
+			<div class="well">
+				<h1>Offer Food Form:</h1>
+				<form class="form-horizontal" action="/add/food/" method ='POST'>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="author">Food Type:</label>
+						<div class="col-sm-4">
+							<div class="col-sm-8">
+								<select class="form-control" name ='type' style = "width: 250px; height: 50px;">
+					        <option>Meat</option>
+					        <option>Dairy</option>
+					        <option>Pastry</option>
+					        <option>Drinks</option>
+								</select>
+							</div>
+
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="review">Comment:</label>
+						<div class="col-sm-4">
+							<textarea class="form-control" rows="5" name="content" placeholder="Enter Comment here"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="rating">Date desired:</label>
+						<div class="col-sm-4">
+							<input type="date" name="date">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-success">Submit</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
